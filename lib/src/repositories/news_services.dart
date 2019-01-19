@@ -29,8 +29,7 @@ class NewsServices {
     final url = NewsServices._getStoriesUrl(storyType);
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final List<int> ids = json.decode(response.body);
-      return List.unmodifiable(ids);
+      return List<int>.unmodifiable(json.decode(response.body));
     } else {
       throw http.ClientException(response.toString(), response.request.url);
     }

@@ -25,6 +25,7 @@ abstract class Story implements Built<Story, StoryBuilder> {
   @BuiltValueField(wireName: "time")
   int get publishedAt;
 
+  @nullable
   Uri get url;
 
   Story._();

@@ -38,9 +38,13 @@ class _$StorySerializer implements StructuredSerializer<Story> {
       'time',
       serializers.serialize(object.publishedAt,
           specifiedType: const FullType(int)),
-      'url',
-      serializers.serialize(object.url, specifiedType: const FullType(Uri)),
     ];
+    if (object.url != null) {
+      result
+        ..add('url')
+        ..add(serializers.serialize(object.url,
+            specifiedType: const FullType(Uri)));
+    }
 
     return result;
   }
@@ -148,9 +152,6 @@ class _$Story extends Story {
     }
     if (publishedAt == null) {
       throw new BuiltValueNullFieldError('Story', 'publishedAt');
-    }
-    if (url == null) {
-      throw new BuiltValueNullFieldError('Story', 'url');
     }
   }
 

@@ -1,23 +1,23 @@
 import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
-import '../repositories/news_services.dart';
+import '../repositories/stories_provider.dart';
 import '../models/story.dart';
 import '../models/news_list_item.dart';
 
-class NewsFeedsBlock {
+class StoriesBloc {
   final int _maxItemsPerPage = 10;
   List<int> _storyIds;
   final List<Story> _stories = [];
   var _isLoading = false;
   StreamSubscription<void> _itemsSubscription;
 
-  final _serviceProvider = NewsServices();
+  final StoriesProvider storiesProvider;
 
   PublishSubject<Null> fetchStories;
   BehaviorSubject<List<NewsListItem>> listItems;
 
-  NewsFeedsBlock() {
+  StoriesBloc({this.storiesProvider}) {
     listItems = BehaviorSubject<List<NewsListItem>>(seedValue: []);
 
     fetchStories = PublishSubject<Null>();
@@ -43,7 +43,7 @@ class NewsFeedsBlock {
 
   Observable<void> _initStoryIDsIfRequired() {
     if (_storyIds == null) {
-      return Observable.fromFuture(_serviceProvider.getNewStoryIds())
+      return Observable.fromFuture(storiesProvider.getStoryIds())
           .map((ids) => _storyIds = ids);
     } else {
       return Observable.just(null);
@@ -64,7 +64,7 @@ class NewsFeedsBlock {
 
   Observable<List<Story>> _toNewsStories(List<int> ids) {
     final storyObservables = ids
-        .map((id) => _serviceProvider.getStory(storyId: id))
+        .map((id) => storiesProvider.getStory(storyId: id))
         .map((storyFuture) => Observable.fromFuture(storyFuture));
     return Observable.zip<Story, List<Story>>(
         storyObservables, (stories) => stories);

@@ -1,8 +1,8 @@
 import '../models/story.dart';
 
-abstract class NewsListItem {}
+abstract class StoriesListItem {}
 
-class StoryItem implements NewsListItem {
+class StoryItem implements StoriesListItem {
   final int id;
   final String title;
   final String subTitle;
@@ -15,4 +15,4 @@ class StoryItem implements NewsListItem {
   }
 }
 
-class LoadingItem implements NewsListItem {}
+class LoadingItem implements StoriesListItem {}

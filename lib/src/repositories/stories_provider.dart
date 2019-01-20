@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../app_constants.dart';
+import '../resources/constants.dart';
 import '../models/story.dart';
 import '../models/serializers.dart';
 
@@ -26,7 +26,7 @@ abstract class StoriesService implements StoriesProvider {
 
   @override
   Future<Story> getStory({int storyId}) async {
-    final url = '${AppConstants.baseURL}/v0/item/$storyId.json';
+    final url = '${Constants.baseURL}/v0/item/$storyId.json';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final story = serializers.deserializeWith(
@@ -40,15 +40,15 @@ abstract class StoriesService implements StoriesProvider {
 
 class TopStoriesService extends StoriesService {
   @override
-  String get storyIdsURL => '${AppConstants.baseURL}/v0/topstories.json';
+  String get storyIdsURL => '${Constants.baseURL}/v0/topstories.json';
 }
 
 class NewStoriesService extends StoriesService {
   @override
-  String get storyIdsURL => '${AppConstants.baseURL}/v0/newstories.json';
+  String get storyIdsURL => '${Constants.baseURL}/v0/newstories.json';
 }
 
 class BestStoriesService extends StoriesService {
   @override
-  String get storyIdsURL => '${AppConstants.baseURL}/v0/beststories.json';
+  String get storyIdsURL => '${Constants.baseURL}/v0/beststories.json';
 }

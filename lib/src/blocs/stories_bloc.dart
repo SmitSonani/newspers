@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 
 import '../repositories/stories_provider.dart';
 import '../models/story.dart';
-import '../models/news_list_item.dart';
+import '../models/stories_list_item.dart';
 
 class StoriesBloc {
   final int _maxItemsPerPage = 10;
@@ -15,10 +15,10 @@ class StoriesBloc {
   final StoriesProvider storiesProvider;
 
   PublishSubject<Null> fetchStories;
-  BehaviorSubject<List<NewsListItem>> listItems;
+  BehaviorSubject<List<StoriesListItem>> listItems;
 
   StoriesBloc({this.storiesProvider}) {
-    listItems = BehaviorSubject<List<NewsListItem>>(seedValue: []);
+    listItems = BehaviorSubject<List<StoriesListItem>>(seedValue: []);
 
     fetchStories = PublishSubject<Null>();
     _itemsSubscription = fetchStories
@@ -71,7 +71,7 @@ class StoriesBloc {
   }
 
   void _refreshListItems() {
-    final List<NewsListItem> items = [];
+    final List<StoriesListItem> items = [];
     items.addAll(_stories.map((story) => StoryItem.withA(story)).toList());
     if (_isLoading) {
       items.add(LoadingItem());

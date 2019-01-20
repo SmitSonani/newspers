@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../blocs/stories_bloc.dart';
-import '../../models/news_list_item.dart';
+import '../../models/stories_list_item.dart';
 
 class StoriesListView extends StatefulWidget {
   @override
@@ -31,7 +31,7 @@ class _StoriesListViewState extends State<StoriesListView> {
     return StreamBuilder(
       stream: Provider.of<StoriesBloc>(context).listItems,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        final List<NewsListItem> items = snapshot.data;
+        final List<StoriesListItem> items = snapshot.data;
 
         if (items == null) {
           return Container();
